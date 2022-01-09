@@ -1,4 +1,24 @@
 @import url('https://fonts.googleapis.com/css?family=Permanent+Marker|Roboto+Slab|Russo+One&display=swap');
+body{
+    background-color:#d3d3d3;
+}
+h2{
+    text-align: center;
+    font-size:2.5em;
+    font-weight:bold;
+    font-family:'Permanent Marker', Charcoal, sans-serif;
+    color:#b30000;
+    border-bottom: 4px solid #b30000;
+    max-width:100%;
+}
+p{
+    size:2em;
+}
+
+
+
+/**
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker|Roboto+Slab|Russo+One&display=swap');
 #container{
     margin:0 auto;
     width:100%;
@@ -30,3 +50,4 @@ body{
     background-color:#d3d3d3;
 }
 
+*/
