@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>FizzBuzz</title>
+</head>
+<body>
+    <h1>FizzBuzz/h1>
+    <p>This webpage will also look pretty plain. I found out my solution could be simplified even further, so I enjoyed this activity. 
+        However, I placed my original solution in the JS tags and the most efficient solution within the comments.</p>
+    </div>
+    <script>
+    //Condition 1: If number is 
+    //If number is negative, it will run out of stack trace and abort
+    for(let i=1; i<=100; i++){
+        if(i % 3 == 0 && i % 5 != 0){
+            console.log("Fizz");
+        }
+  	    else if(i % 5 == 0 && i % 3 != 0){
+            console.log("Buzz");
+        }
+        else if(i % 3 == 0 %% i % 5 == 0){
+            console.log("FizzBuzz");
+        }
+        else{
+            console.log(i);
+        }
+        }
+        /**Most Efficient Solution:
+         for (let n = 1; n <= 100; n++) {
+             let output = "";
+             if (n % 3 == 0) output += "Fizz";
+             if (n % 5 == 0) output += "Buzz";
+             console.log(output || n);
+            }
+         * 
+</script>
+</body>
