@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Week 2 Notes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h2>Week 2 Notes</h2>
+    </header>
+    <main>
+        <h3>Questions:</h3>
+        <p>I don’t understand how a statement like: "!!" evaluates to false from Javascript:Novice to Ninja, 2nd edition book from the second chapter under "Logical Operators"</p>
+        <h3>Terminology:</h3>
+        <h4>Automatic Semicolon Insertion- a process in JS that automatically places semicolons at the end of lines. But, it can be error-prone, so it's best practice to write JS statements line-by-line and add semicolons at the end of each line.</h4>
+        <h4>Block- series of statements collected together inside of curly brackets.</h4>
+        <h4>typeof- special JS operator to find a type of the value.</h4>
+        <h4>Type coercion- This happens when JavaScript attempts to convert one operand to an equivalent value of the other operand's type.</h4>
+
+        <h3>Data Types & Variables:</h3>
+        <h4>Non-primitive data types are arrays, functions, or objects.</h4>
+        <h4>Variables that start with an underscore generally refer to private properties and methods.</h4>
+        <h4>When assigning a primitive value to a variable, any changes made will only directly affect that value.</h4>
+        <h4>Example:</h4>
+            <p class="example">const a= 1</p>
+            <p class="example">let b = a; // a =1, b = 1</p>
+            <p class="example">b = 2: // a =1, b = 2</p>
+        <h4>But when assigning non-primitive values to a variable, then it is done by reference. And any changes made will affect all references to that object.</h4>
+        <h4>Example:</h4>
+            <p class="example">const c = { value: 1};</p>
+            <p class="example">let d = c; //c.value = 1, d.value = 1</p>
+            <p class="example">d.value = 2; // c.value = 2, d.value = 2</p>
+        <h3>Valid ways to put an apostrophe in a string:</h3>
+        <ol>
+            <li>"It's me"</li>
+            <li>'It\'s me'</li>
+            <li>It's me</li>
+        </ol>
+        <h3>Template literals allow interpolation of JS code. It means that a JS expression can be inserted inside a string and the result will be displayed, as can be seen in the example below:</h3>
+        <p class="example">const name = Siri;</p>
+        <p class="example">Hello ${ name }!;</p>
+        <p class="example"><<'Helo Siri!'</p>
+
+        <h3>Type Coercion Example:</h3>
+        <p class="example">'2' * 1 = 3</p>
+        <h4>But if we try and add a string and a number together, it will just concatenate them as a single string.</h4>
+        <h4>Example:</h4>
+        <p class="example">'2' + 1 = 21</p>
+
+        <h3>Modulo Operator:</h3>
+        <h4>When using the modulo operator, the result will keep the sign of the first number.</h4>
+        <h4>Example:</h4>
+        <p class="example">-4%3 = -1</p>
+
+        <h3>Arrow Function Syntax:</h3>
+        <p class="example">const add = (x,y) => x + y;</p>
+    </main>
+    </body>
+</html>

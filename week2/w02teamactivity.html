@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <!--<link rel="stylesheet" href="css/style.css">-->
+</head>
+<body>
+    <header>
+        <h2>W02 Team Activity</h2>
+    </header>
+    <main>
+        <input type="text" id="in"><button onclick="takeInput()">Take Input</button>
+        <button type="text" onclick="sumNumbers()">Sum Numbers</button>
+        <input type="text" id="num1"><input type ="text" id="num2"><br>
+        <button onclick="add()">+</button>
+        <br><button onclick="subtract()">-</button>
+        <br><button onclick="multiply()">*</button>
+        <br><button onclick="divide()">/</button>
+        <div id="output"></div>
+    </main>
+    <script>
+        const takeInput =() =>{
+            const input = parseInt(document.getElementById("in").value);
+            document.getElementById("output").textContent =input;
+            return input;
+        };
+        const sumNumbers =(sum) =>{
+            const num = parseInt(document.getElementById("in").value);
+            let result=0;
+            for(let i=0;i<=num;i++){
+                result+=i;
+            }
+            document.getElementById("output").textContent = result;
+        };
+
+        const add =() =>{
+           num1= parseFloat(document.getElementById("num1").value);
+           num2= parseFloat(document.getElementById("num2").value);
+           let result = num1+num2;
+           document.getElementById("output").textContent = result;
+        };
+        const subtract =() =>{
+           num1= parseFloat(document.getElementById("num1").value);
+           num2= parseFloat(document.getElementById("num2").value);
+           let result = num1-num2;
+           document.getElementById("output").textContent = result;
+        };
+        const multiply =() =>{
+           num1= parseFloat(document.getElementById("num1").value);
+           num2= parseFloat(document.getElementById("num2").value);
+           let result = num1+num2;
+           document.getElementById("output").textContent = result;
+        };
+        const divide =() =>{
+           num1= parseFloat(document.getElementById("num1").value);
+           num2= parseFloat(document.getElementById("num2").value);
+           let result = num1/num2;
+           document.getElementById("output").textContent = result;
+        };
+
+        let inp= takeInput();
+        sumNumbers(inp);  
+    
+        add();
+        subtract();
+        multiply();
+        divide();
+        
+    </script>
+    
+    </body>
+</html>

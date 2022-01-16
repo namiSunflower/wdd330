@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Even or Odd Checker</title>
+</head>
+<body>
+    <h1>Even or Odd With Recursion</h1>
+    <p>I put the results on the console as I mostly focused on the JS. So this webpage will look pretty plain.</p>
+    </div>
+    <script>
+    //Return true if number is even and false if number is odd
+    //If number is negative, it will run out of stack trace and abort
+    function isEven(n) {
+    if (n == 0){
+        return true;
+    }
+    else if (n == 1){ 
+        return false;
+    }
+    else if (n < 0){
+        return isEven(-n);
+    }
+    else{ 
+        return isEven(n - 2);
+    }
+  }
+
+  console.log(isEven(50));
+  console.log(isEven(75));
+  console.log(isEven(-1));
+</script>
+</body>
