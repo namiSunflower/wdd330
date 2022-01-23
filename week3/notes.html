@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Week 3 Notes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h2>Week 3 Notes</h2>
+    </header>
+    <main>
+        <h4>Note: A lot of these notes contain topics from the previous week for reviewing purposes.</h4>
+        <h3>Questions:</h3>
+        <p>I have no questions for this week.</p>
+        <h3>Two Ways to Create an Array in JS:</h3>
+        <ol>
+            <li>const myArray =[]</li>
+            <li>const myArray = new Array();</li>
+        </ol>
+
+        <h3>It's safer to use array literals or  "[]" than new Array() because we can override the value of Array in JavaScript:</h3>
+        <h4>Example:</h4>
+        <p class="example">Array = function() {};<br>
+        var x = new Array();<br>
+        //x is now an Object instead of an Array.</p>
+
+        <h3>An array can also contain different types of data.</h3>
+        <h4>Example:</h4>
+        <p class="example">const mixedArray = [null, 1, [], 'two', true];</p>
+        <h3>Destructuring Arrays-it's the concept of taking values out of an array and presenting them as individual values. Destructuring also allows us to assign multiple values at the same time using arrays:</h3>
+        <p class="example">const [x, y] = [1,2];</p>
+        <h4>Even if the assignment was made using array, each individual variable still exists on its own outside the array. And we can see the results by checking the value of each variable:</h4>
+        <ol>
+            <li>x=1</li>
+            <li>y=2</li>
+        </ol>
+        <h3>Destructuring also allows us to swap the value of two variables over:</h3>
+        <p class="example">[x, y] = [y, x]</p>
+        <h4>Results:</h4>
+        <ol>
+            <li>x=2</li>
+            <li>y=1</li>
+        </ol>
+
+        <h3>Viewing the value of the last element in an array:</h3>
+        <p class="example">const avengers = ['Captain America', 'Iron Man', 'Thor', 'Hulk', 'Hawkeye', 'Black Widow']<br>
+        console.log(avengers[avengers.length -1];<br>
+        Result: Black Widow</p>
+
+        <h3>To include a new value or element at the beginning of an array, we can use the .unshift() method.</h3>
+        <h4>Syntax:</h4>
+        <p class="example">arrayName.unshift(newElement);</p>
+
+        <h3>Finding if an array contains a specific element:</h3>
+        <ol>
+            <li>arrayName.indexOf(element);</li>
+            <li>arrayName.includes(element): </li>
+        </ol>
+        <h4>If we run the first code above when finding out if an array contains a specific element,  it will return the index of that element if the element exists. If the item is not in the array, it will return -1 instead.</h4>
+        <h4>The .includes() method will return either true or false to show if the element does/does not exist within the array.</h4>
+
+        <h3>We can also add an extra parameter to indicate which index to start the search from:</h3>
+        <p class="example">arrayname.includes(element, index) //will start the search from the index value specified within the parentheses.</p>
+
+        <h3>Join method:</h3>
+        <h4>It can he used to an array into a string that comprises all the items in the array separated by commas.</h4>
+        <h4>Example:</h4>
+        <p class="example">letters.join()<br>
+        Result = 'a, b, c, d, e, f'</p>
+
+        <h3>We can also choose another separator other than a comma by placing it inside the parentheses:</h3>
+        <p class="example">numbers.join('&')<br>
+        Result = '1 & 2 & 3 & 4'</p>
+
+        <h3>Slicing & Splicing:</h3>
+        <h4>Slice method- creates a subarray and chops out a slice of the original array.</h4>
+        <h4>Example:</h4>
+        <p class="example">avengers.slice(2,4) = ['Thor', 'Hulk']</p>
+        <h4>Note that this method is non-destructive and no items are actually removed from the array.</h4>
+        <h4>Splice method- removes items from an array and inserts new items in their place.</h4>
+        <h4>Example:</h4>
+        <p class="example">avengers.splice(3, 1, 'Scarlet Witch')</p>
+        <h4>The code above will remove whatever element is in the third index value and replace it with Scarlet Witch. The number next to 3 from the example determines how many items will  be removed starting from the third index value.</h4>
+        
+        <h3>Sets:</h3>
+        <h4>If any values are repeated in the array, then they will only appear once in the set:</h4>
+        <p class="example">const moreNumbers = new Set([7,7,7,7,7,8,8,8,9,9]);<br>
+        console.log(moreNumbers) = Set {7,8,9}</p>
+
+        <h3>Spread Operator Symbol- "..." (without quotation marks)</h3>
+
+        <h3>Ternary Operator Syntax:</h3>
+        <p class="example">condition ? (//code to run if condition is true) : (//code to run if condition is false)</p>
+
+        <h3>Checking If n Is Odd or Even Using Ternary Operator:</h3>
+        <p class="example">const n = 5;<br>
+        n%2 === 0 ? console.log('n is an even number') : console.log('n is an odd number');<br>
+        <br>'n is an odd number'</p>
+        
+        <h3>Odd or Even Checker Using Ternary Operator & Template String:</h3>
+        <p class="example">console.log(`n is a ${(n%2 === 0)? 'even' : 'odd'} number`);</p>
+    
+        <h3>Looping Over a Set:</h3>
+        <p class="example">const letters = new Set('hello');<br>
+        for(const letter of letters) {<br>
+        console.log(letter);<br>
+        }<br>
+        Result: 1, 2, 3, 4, 5</p>
+
+        <h3>Looping Over a Map’s Values:</h3>
+        <p class="example">for(const value of RomanNumerals.values()) {<br>
+        console.log(value);<br>  
+        }<br>  
+        Result: I, II, III, IV, V</p>
+
+        <h3>Accessing Both Keys & Maps Using entries() method:</h3>
+        <p class="example">for(const [key,value] of RomanNumerals.entries()) {<br>
+        console.log(`${key} in Roman numerals is ${value}`);<br>
+        }<br> 
+        Result: 1 in Roman numerals is I, 2 in Roman numerals is II, 3 in Roman numerals is III, 4 in Roman numerals is IV, 5 in Roman numerals is V</p>
+
+        <h3>Use of Template Literals Example:</h3>
+        <p class="example">const name = `Siri`;<br>
+        `Hello ${ name }!`;<br>
+        Result: 'Hello Siri!'</p>
+
+        <br>
+        <p class="example">const age = 39;<br>
+        `I will be ${ age + 1 } next year`;<br>
+        Result: 'I will be 40 next year'</p>
+
+        <h3>Object Syntax:</h3>
+        <p class="example">var objName = {<br>
+            propertyName: propertyValue,<br>
+            propertyName: propertyValue,<br>
+            methodName() {<br>
+                //code to execute<br>
+            }<br>
+            };</p>
+        
+        <h4>Object Example:</h4>
+        <p class="example">const superman = {<br>
+            name: 'Superman',<br>
+            'real name': 'Clark Kent',<br>
+            height: 75,<br>
+            weight: 235,<br>
+            hero: true,<br>
+            villain: false,<br>
+            allies: ['Batman','Supergirl','Superboy'],<br>
+            fly() {<br>
+                return 'Up, up and away!';<br>
+            }<br>
+        };</p>
+
+        <h3>Ways to Create an Object:</h3>
+        <ol>
+            <li>const spiderman = {};/li>
+            <li>const spiderman = new Object();</li>
+        </ol>
+
+        <h3>Accessing Properties & Methods of Objects:</h3>
+        <ol>
+            <li>Dot-notation: superman.name</li>
+            <li>Bracket notation: superman[“name”]</li>
+            <li>Dot-notation: superman.fly()</li>
+            <li>Bracket notation: superman[“fly”]()</li>
+        </ol>
+        <h4>Although dot-notation is more commonly used, bracket notation comes in handy when trying to access non-standard property and method names.</h4>
+        <h4>Example:</h4>
+        <p class="example">superman["real" + " " + "name"] // the property is built using string concatenation<br>
+            Result: "Clark Kent"</p>
+        <h3>Example Code of a Nested Object:</h3>
+        <p class="example">const jla = {<br>
+            superman: { realName: 'Clark Kent' },<br>
+            batman: { realName: 'Bruce Wayne' },<br>
+            wonderWoman: { realName: 'Diana Prince" },<br>
+            flash: { realName: 'Barry Allen' },<br>
+            aquaman: { realName: 'Arthur Curry' },<br>
+        }</p>
+
+        <h3>Accessing Nested Object:</h3>
+        <p class="example">jla.wonderWoman.realName<br>
+        Result: ”Diana Prince"</p>
+        <br>
+        <p class="example">jla['flash']['realName']<br>
+        Result: "Barry Allen"</p>
+        <br>
+        <p class="example">jla.aquaman['realName']<br>
+        Result: "Arthur Curry"</p>
+        <br>
+        <h3>Parse Method:</h3>
+        <h4>The parse() method takes a string of data in JSON format and returns a JavaScript object:</h4>
+        <p class="example">JSON.parse(batman);<br>
+            Result:<br>
+            { name: 'Batman',<br>
+            'real name': 'Bruce Wayne',<br>
+            height: 74,<br>
+            weight: 210,<br>
+            hero: true,<br>
+            villain: false,<br>
+            allies: [ 'Robin', 'Batgirl', 'Superman' ] }
+        </p>
+        <h4>The stringify() method does the opposite, taking a JavaScript object and returning a string of JSON data.</h4>
+    </main>
+    </body>
+</html>
