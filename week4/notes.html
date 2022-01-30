@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Week 4 Notes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h2>Week 4 Notes</h2>
+    </header>
+    <main>
+        <h3>Questions:</h3>
+        <p id="questions">I have no questions for this week.</p>
+        <h3>Modularization JS:</h3>
+        <h4>Module-is a self-contained piece of code that provides functions and methods that can then be used in other files and by other modules.</h4>
+
+        <h3>Simple import & export syntax:</h3>
+        <h4>A file called pi.js containing this code:</h4>
+        <p>export const PI = 3.1415926;
+
+
+        <h4>Another file called main.js importing the PI module:</h4>
+        <p>import { PI } from './pi.js';</p>
+
+        <h3>Importing & exporting functions:</h3>
+        <p>function square(x) {<br>
+            return x * x;<br>
+        }<br>
+        function sum(array, callback) {<br>
+            if(callback) {<br>
+                array = array.map(callback);<br>
+            }<br>
+            return array.reduce((a,b) => a + b );<br>
+        }<br>
+        function variance(array) {<br>
+            return sum(array,square)/array.length - square(mean(array))<br>
+        }<br>
+        function mean(array) {<br>
+            return sum(array) / array.length;<br>
+        }<br>
+        export {<br>
+            variance,<br>
+            mean<br>
+        }
+        </p>
+        
+        <h3>To import the functions in another file:</h3>
+        <p>import  { mean, variance } from './stats.js';</p>
+
+        <h4>Default exports- refer to a single variable, function or class in a module that can be imported without having to be explicitly named. The syntax for default exports is purposely easier to read because this is how modules were designed to be used.</h4>
+        <h4>Example:</h4>
+        <p>const PI = 3.145926;<br>
+           export default PI
+        </p>
+
+        <h4>Another Example:</h4>
+        <p>function square(x) {<br>
+            return x * x;<br>
+        }<br><br>
+        export default square;
+        </p>
+
+        <h3>Importing default exports syntax:</h3>
+        <p>
+            import PI from './pi.js';<br>
+            import square from './square.js';<br>
+            import stats from './stats.js';<br>
+        </p>
+
+        <h4>package-is a chunk of code that can be distributed (copied and installed). It may contain one or more modules and has information about which other packages it depends on. </h4>
+
+        <h4>Node.js uses modules that are called CommonJS modules. It also requires a function called require</h4>
+        <h4>Example:</h4>
+        <p>
+            const ordinal = require("ordinal");<br>
+            const {days, months} = require("date-names");<br>
+
+            exports.formatDate = function(date, format) {<br>
+                return format.replace(/YYYY|M(MMM)?|Do?|dddd/g, tag => {<br>
+                  if (tag == "YYYY") return date.getFullYear();<br>
+                  if (tag == "M") return date.getMonth();<br>
+                  if (tag == "MMMM") return months[date.getMonth()];<br>
+                  if (tag == "D") return date.getDate();<br>
+                  if (tag == "Do") return ordinal(date.getDate());<br>
+                  if (tag == "dddd") return days[date.getDay()];<br>
+                });<br>
+              };
+        </p>
+
+        <h3>Prototypal Inheritance:</h3>
+        <h4>Every class has a prototype property that is shared by every instance of the class. So any properties or methods of a class’s prototype can be accessed by every object instantiated by that class</h4>
+        <h4>Example:</h4>
+        <p>
+            class Turtle {<br>
+                constructor(name) {<br>
+                    this.name = name;<br>
+                    this.weapon = 'hands';<br>
+                }<br>
+                sayHi() {<br>
+                    return `Hi dude, my name is ${this.name}`;<br>
+                }<br>
+                attack(){<br>
+                    return `Feel the power of my ${this.weapon}!`;<br>
+                }<br>
+            }<br>
+            const leo = new Turtle('Leonardo');<br>
+            RESULT: Turtle { name: 'Leonardo' }
+        </p>
+        <h4>Accessing the properties & methods of variable leo (from example above):</h4>
+        <p>leo.name;<br>
+            Result: 'Leonardo'<br><br>  
+            leo.sayHi();<br>
+            Result:'Hi dude, my name is Leonardo'</p>
+
+        <h4>When we want to add in new extra methods & properties a class has been created, we can use the prototype property in JavaScript.</h4>
+        <h4>All classes and constructor functions have a prototype property that returns an object:</h4>
+        <p>Turtle.prototype;<br>
+            Result: Turtle {}<br><br>
+            //Adding a new property in Turtle<br>
+            Turtle.prototype.weapon = 'Hands';<br>
+            Result: 'Hands'<br><br>
+            //Adding a new method in Turtle<br>
+            Turtle.prototype.attack = function(){<br>
+                return `Feel the power of my ${this.weapon}!`;<br>
+                }<br>
+                Result: [Function]
+        </p>
+        <h3>Creating a New Turtle Instance with Inheritance:</h3>
+        <p>
+            const raph = new Turtle('Raphael');<br>
+            raph.name<br>
+            Result: 'Raphael'<br><br>
+
+            raph.sayHi()<br>
+            Result: 'Hi dude, my name is Raphael'<br><br>
+
+            raph.weapon<br>
+            Result: 'Hands'<br><br>
+
+            raph.attack()<br>
+            Result:'Feel the power of my Hands!'
+        </p>
+        <h3>Ways to Find Out the Prototype of an Object</h3>
+        <h4>1.</h4>
+        <p>
+            raph.constructor.prototype;<br>
+            Result: Turtle { attack: [Function], weapon: 'Hands' }
+        </p>
+        <h4>2.</h4>
+        <p>
+            Object.getPrototypeOf(raph);<br>
+            Result: Turtle { attack: [Function], weapon: 'Hands' }
+        </p>
+        <h4>3.</h4>
+        <p>
+            raph.__proto__<br>
+            Result: Turtle { attack: [Function], weapon: 'Hands' }
+        </p>
+
+        <h3>Checking to See If Object Has Specific Prototype Property</h3>
+        <h4>Every object has a hasOwnProperty() method that can be used to check if a method is its own property, or is inherited from the prototype:</h4>
+        <p>
+            raph.hasOwnProperty('name');<br>
+            Result: true<br><br>
+
+            raph.hasOwnProperty('weapon');<br>
+            Result: false
+        </p>
+        <h3>Difference Between Prototype Properties & Object's Own Properties</h3>
+        <h4>Prototype properties are shared by every instance of the Turtle class. This means they’ll all have a weapon property, and it will always be the same value. If we create another instance of the Turtle class, we’ll see that it also inherits a weapon property that has the same value of 'Hands':</h4>
+        <p>
+            const don = new Turtle('Donatello');<br>
+            Result: Turtle { name: 'Donatello' }<br><br>
+
+            don.weapon;<br>
+            Result: 'Hands  
+        </p>
+        <h4>The prototype object is live, so if a new property or method is added to the prototype, any instances of its class will inherit the new properties and methods automatically, even if that instance has already been created.</h4>
+    </main>
+    </body>
+</html>
