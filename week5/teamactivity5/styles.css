@@ -1,0 +1,32 @@
+body{
+    margin-top: 0;
+    margin-bottom: 0;
+    
+}
+h1{
+    text-align: center;
+    padding: 3em;
+    background-color: aqua;
+    font-size: 35px;
+    
+
+}
+h2{
+    text-align: center;
+    background-color: aquamarine;
+    font-size: 30px;
+    grid-column: 1/3;
+}
+#text{
+    margin-right: 30em;
+}
+img{
+    width: 50%;
+    margin-left:10em;
+}
+#flex{
+    display: flex;
+}
+.hidden{
+    display:none ;
+}

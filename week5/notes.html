@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Week 5 Notes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h2>Week 5 Notes</h2>
+    </header>
+    <main>
+        <h3>Questions:</h3>
+        <p id="questions">I have trouble understanding what a JavaScript assertion is and what it's used for.</p>
+        <h3>Terminologies:</h3>
+        <h4>System error- system or could also be an error from interacting with external devices.</h4>
+        <h4>Programmer error-usually syntax error or faulty logic</h4>
+        <h4>User error- User entered incorrect data that the program can’t handle.</h4>
+        <h4>Stack trace- this will work backgrounds from the point the error occurred to identify the original function or method that started the sequence.</h4>
+        <h4>Warning- can occur if there’s an error in the code but not enough to cause the program to crash.</h4>
+        <h4>Strict mode- produces more exceptions and warnings, and also prohibits use of some deprecated features</h4>
+        
+        <h3>Syntax to Enable Strict Mode:</h3>
+        <p>'use strict';</p>
+
+        <h4>To see it in action, if we try to assign a value to a variable that is undeclared in strict mode, you'll get an exception, instead of a warning:</h4>
+        <p>
+            'use strict';<br>
+            e = 2.718;<br>
+            Result: ReferenceError: e is not defined
+        </p>
+
+        <h3>Exception Handling:</h3>
+        <h4>throw-keyword used to raise an exception.</h4>
+        <h4>try- executing the code and catching potential errors would be done by wrapping it in a try block.</h4>
+        <h4>catch-executes after catching an error from the try block.</h4>
+
+        <h4>Example Syntax:</h4>
+        <p>
+            function promptDirection(question) {<br>
+                let result = prompt(question);<br>
+                if (result.toLowerCase() == "left") return "L";<br>
+                if (result.toLowerCase() == "right") return "R";<br>
+                throw new Error("Invalid direction: " + result);<br>
+              }<br><br>
+              
+              function look() {<br>
+                if (promptDirection("Which way?") == "L") {<br>
+                  return "a house";<br>
+                } else {<br>
+                  return "two angry bears";<br>
+                }<br>
+              }<br><br>
+              
+              try {<br>
+                console.log("You see", look());<br>
+              } catch (error) {<br>
+                console.log("Something went wrong: " + error);<br>
+              }  
+        </p>
+
+        <h4>JavaScript doesn’t provide direct support for selectively catching exceptions: either you catch them all or you don’t catch any. To catch a specific error, one way of doing it would be to create a new error class that extends from ‘Error’.</h4>
+        <h4>Example syntax for creating a new error class:</h4>
+        <p>
+            class InputError extends Error {}<br><br>
+            function promptDirection(question) {<br>
+            let result = prompt(question);<br>
+            if (result.toLowerCase() == "left") return "L";<br>
+            if (result.toLowerCase() == "right") return "R";<br>
+            throw new InputError("Invalid direction: " + result);<br>
+            }
+        </p>
+        <h4>Example of using newly created InputError class:</h4>
+        <p>
+            for (;;) {<br>
+                try {<br>
+                  let dir = promptDirection("Where?"); //assuming promptDirection is misspelled<br>
+                  console.log("You chose ", dir);<br>
+                  break;<br>
+                } catch (e) {<br>
+                  if (e instanceof InputError) {<br>
+                    console.log("Not a valid direction. Try again.");<br>
+                  } else {<br>
+                    throw e;<br>
+                  }<br>
+                }<br>
+              }
+        </p>
+    </main>
+    </body>
+</html>
