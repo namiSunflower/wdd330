@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Challenge 1 Todo</title>
+    <link rel="stylesheet" href="../toDo/css/style.css">
+</head>
+<body>
+    <div id="wrapper">
+    <header>
+        <h2>Todo List</h2>
+    </header>
+    <main>
+        <ul id="tdList"></ul>
+        <div id="filterSection">
+            <span id="msg"></span>
+            <div id="buttonSection">
+                <button id="all" class="filterButtons">All</button>
+                <button id="pending" class="filterButtons">Active</button>
+                <button id="completed" class="filterButtons">Completed</button>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div id="footerItems">
+            <input type="text" id="task">
+            <button id="add">+</button>
+        </div>
+    </footer>
+    </div>
+    <script src="../toDo/js/main.js" type="module"></script>
+</body>
+</html>

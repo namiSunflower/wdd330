@@ -8,9 +8,11 @@ export default class Todos{
     addTodo(){
         let task = document.getElementById("task").value;
         let key = this.key;
-        saveTodo(task, key);
-        this.listTodos();
-        console.table(todoList);
+        if(task){
+            saveTodo(task, key);
+            this.listTodos();
+            console.table(todoList);
+        }
     }
 
     addFilterListeners() {
@@ -47,7 +49,7 @@ export default class Todos{
         //Attach event listener for complete todo item 
         const itemList = Array.from(this.parentElement.children);
         console.log(itemList)
-        if(itemList[0].children[0]){
+        if(itemList.length > 0 && itemList[0].children[0]){
             itemList.forEach(task => {
                 task.children[0].addEventListener('click', event => {
                     completeTodo(this.key, event.currentTarget.id);
@@ -62,7 +64,9 @@ export default class Todos{
 
     listTodos(){
         renderTodoList(getToDos(this.key), this.parentElement);
-        this.addEventListeners();
+        if(todoList != null){
+            this.addEventListeners();
+        }
     }    
 }
 
@@ -74,16 +78,12 @@ function completeTodo(key, itemId){
     //Testing purposes
     console.log(selectedTask);
     todoList[selectedTask].completed = !todoList[selectedTask].completed;
-    strikeThrough(itemId);
+   
     ls.readFromLs(key, todoList)
     //localStorage.setItem('todoList', JSON.stringify(todoList));
     //console.table(localStorage['todoList']);
 }
-//function to assign strikeThrough class and strikethrough completed tasks
-function strikeThrough(itemID){
-    let taskContainer = document.getElementById(itemID).parentElement;
-    taskContainer.classList.toggle('strikeThrough');
-}
+
 
 function saveTodo(task, key) {
     document.getElementById("tdList").innerHTML = "";
@@ -126,24 +126,25 @@ function renderTodoList(list, element){
     });}
     else{
         const emptyList = document.createElement('li');
-        emptyList.innerHTML = `No Tasks Found`
+        emptyList.innerHTML = `Type task in the input box below.`
         element.appendChild(emptyList);
     }
+    countTasks(todoList);
  }
 
 //Go through to do list and display each task with the following format
  function renderTodo(task){
      const item = document.createElement("li");
      if(todoList.length > 0){
-     item.innerHTML = `<input id="${task.id}" name="${task.content}" type="checkbox" value="none" ${task.completed ? 'checked' : ''}>
-     <label for="${task.id}">${task.content}</label>
-     <button id="remove">X</button>
-     `;
-    return item;
+         task.completed ? item.classList.toggle('completed') : '';
+         item.innerHTML = `<input id="${task.id}" name="${task.content}" type="checkbox" value="none"} ${task.completed ? 'checked' : ''}>
+         <label for="${task.id}">${task.content}</label>
+         <button id="remove">X</button>`;
+         return item;
      }
- }
+}
 
-//filter list by pending, completed, or all
+//Filter list by pending, completed, or all
 function filterTasks(category){
     switch(category){
         case 'pending':
@@ -158,5 +159,10 @@ function filterTasks(category){
     }
     return category;
 }
+function countTasks(list){
+    const numOfTasks = document.getElementById('msg');
+    numOfTasks.innerHTML = `${list.length} tasks left`;
+}
+
 
 
