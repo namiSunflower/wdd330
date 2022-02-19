@@ -26,19 +26,19 @@ const links = [
 	},
 	{
 		label: 'Week 7',
-		url: '#'
+		url: 'week7/index.html'
 	},
 	{
 		label: 'Week 8',
-		url: '#'
+		url: 'week8/index.html'
 	},
 	{
 		label: 'Week 9',
-		url: '#'
+		url: 'week9/index.html'
 	},
 	{
 		label: 'Week 10',
-		url: '#'
+		url: 'week10/index.html'
 	},
 	{
 		label: 'Week 11',

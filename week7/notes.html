@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Week 7 Notes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h2>Week 7 Notes</h2>
+    </header>
+    <main>
+        <a href="http://callbackhell.com/">Callback Hell Link</a>
+        <h3>Questions:</h3>
+        <p id="questions">This is probably a dumb question, but what's the difference between synchronous and asynchronous programming? I still don't understand it fully.</p>
+      
+        <h3>Call Method</h3>
+        <h4>The call() method can be used to set the value of this inside a function to an object that is provided as the first argument.</h4>
+        <h4>Example Syntax:</h4>
+        <p>
+          function sayHello(){<br>
+            return `Hello, my name is ${ this.name }`;}<br><br>
+
+            const clark = { name: 'Clark' };<br>
+            const bruce = { name: 'Bruce' };<br><br>
+            
+            sayHello.call(clark);<br>
+            Result: 'Hello, my name is Clarke'<br><br>
+            
+            sayHello.call(bruce);<br>
+            Result: 'Hello, my name is Bruce'
+        </p>
+
+        <h4>If a function doesn’t refer to an object as this in its body, it can still be called using the call() method, but we need provide null as its first argument. 
+          For example, we could call the square() function using the call() method, like so:</h4>
+          <p>
+            square.call(null, 4)<br>
+            Result: 16
+          </p>
+
+        <h3>Apply Method</h3>
+        <h4> The apply method works similarly as the call method except the arguments of the function are provided as an array, even if there is only one argument.</h4>
+        <h4>Example:</h4>
+        <p>
+          square.apply(null, [4])<br>
+          Result: 16
+        </p>
+
+        <h3>Memoization</h3>
+        <h4>We can also save results in a cache property if ever a function takes too long to compute the return value. It works similarly like local storage where we can check the stored results in the cache later on. Below is an example of how it works using a method that will compute a squared value:</h4>
+        <p>
+          function square(x){<br>
+            square.cache = square.cache || {};<br>
+            if (!square.cache[x]) {<br>
+                square.cache[x] = x*x;<br>
+            }<br>
+            return square.cache[x]<br>
+        }<br><br>
+        square(3);<br>
+        Result: 9<br><br>
+        
+        square(-11);<br>
+        Result: 121<br><br>
+        
+        square.cache;<br>
+        Result: {"3": 9, "-11": 121}
+        </p>
+        <h3>Immediately Invoked Function Expression (IIFE, pronounced 'iffy')</h3>
+        <h4>This is an anonymous type of function that is invoked instantly the moment it is defined. The function must also get wrapped within a set of parentheses and another pair of parentheses must also be added at the end of the function declaration.</h4>
+        <h4>Example Syntax:</h4>
+        <p>
+          (function(){<br>
+            const temp = 'World';<br>
+            console.log(`Hello ${temp}`);<br>
+            })();<br>
+            Result: 'Hello World'
+        </p>
+
+        <h3>Temporary Variables</h3>
+        <h4>If a variable is only required temporarily, it may cause confusion if it’s still available later in the code. Even worse, the name of the variable may clash with another piece of code (an external JavaScript library, for example) resulting in errors. Placing any code that uses the temporary variable inside an IIFE will ensure it’s only available while the IIFE is invoked, then it will disappear.</h4>
+        <h4> The example that follows uses an IIFE to swap the value of two global variables, a and b. This process requires the use of a temporary variable, called temp, which only exists while the IIFE is invoked:</h4>
+        <p>
+          let a = 1;<br>
+          let b = 2;<br><br>
+          
+          (()=>{<br>
+              const temp = a;<br>
+              a = b;<br>
+              b = temp;<br>
+          })();<br><br>
+          
+          a;<br>
+          Result: 2<br><br>
+          
+          b;<br>
+          Result: 1<br><br>
+          
+          console.log(temp);<br>
+          Result: Error: "temp is not defined"
+        </p>
+      <h3>Self-Contained Code Blocks</h3>
+      <h4>An IIFE can be used to enclose a block of code inside its own private scope so it doesn’t interfere with any other part of the program. Using IIFEs in this way means code can be added or removed separately. The example shows two blocks, A and B, that are able to run code independently of each other:</h4>
+      <p>
+        (function() {<br>
+          // block A<br>
+          const name = 'Block A';<br>
+          console.log(`Hello from ${name}`);<br>
+          }());<br><br>
+      
+          (function() {<br>
+          // block B<br>
+          const name = 'Block B';<br>
+          console.log(`Hello from ${name}`);<br>
+          }());<br><br>
+      
+          Result:Hello from Block A<br>
+          Hello from Block B
+      </p>
+
+      <h3>Functions Defining/Rewriting Themselves</h3>
+      <h4>The dynamic nature of JavaScript means that a function is able to not only call itself, but define itself, and even redefine itself. This is done by assigning an anonymous function to a variable that has the same name as the function.</h4>
+      <h4>Example:</h4>
+      <p>
+        function party(){<br>
+          console.log('Wow this is amazing!');<br>
+          party = function(){<br>
+              console.log('Been there, got the T-Shirt');<br>
+          }<br>
+      }<br>
+
+      Result:'Been there, got the T-Shirt'
+      </p>
+
+      <h4>If the function is also assigned to another variable, this variable will maintain the original function definition and not be rewritten. This is because the original function is assigned to a variable, then within the function, a variable with the same name as the function is assigned to a different function. We can see an example of this if we create a variable called beachParty that is assigned to the party() function before it is called for the first time and redefined:</h4>
+      <p>
+        function party(){<br>
+          console.log('Wow this is amazing!');<br>
+          party = function(){<br>
+              console.log('Been there, got the T-Shirt');<br>
+          }<br>
+      }<br><br>
+      
+      const beachParty = party; // note that the party function has not been invoked<br><br>
+      
+      beachParty(); // the party() function has now been redefined, even though it hasn't been called explicitly<br><br>
+      Result: 'Wow this is amazing!'<br><br>
+      
+      party();<br>
+      Result: 'Been there, got the T-Shirt'<br><br>
+      
+      beachParty(); // but this function hasn't been redefined<br>
+      Result: 'Wow this is amazing!'<br>
+      
+      beachParty(); // no matter how many times this is called it will remain the same<br><br>
+      Result: 'Wow this is amazing!'<br>
+      </p>
+      <h3>Init-Time Branching</h3>
+      <h4> This enables the functions to work more effectively in the browser, and avoid checking for features every time they’re invoked.</h4>
+      <h4>Example Syntax:</h4>
+      <p>
+        function ride(){<br>
+          if (window.unicorn) { <br>
+              ride = function(){<br>
+              // some code that uses the brand new and sparkly unicorn methods<br>
+              return 'Riding on a unicorn is the best!';<br>
+              }<br>
+          } else {<br>
+              ride = function(){<br>
+              // some code that uses the older pony methods<br>
+              return 'Riding on a pony is still pretty good';<br>
+              }<br>
+          }<br>
+          return ride();<br>
+      }<br><br>
+
+      ride(); // the function rewrites itself, then calls itself<br>
+      Result: 'Riding on a pony is still pretty good'
+      </p>
+
+      <h3>Promises</h3>
+      <h4>A promise represents the future result of an asynchronous operation. Promises don't do anything that can't already be achieved using callbacks, but they help simplify the process, and avoid the convoluted code that can result from using multiple callbacks.</h4>
+
+      <h3>Promise Life Cycle</h3>
+      <h4>When a promise is created, it calls an asynchronous operation and is then said to be pending. It remains in this state while the operation is taking place. At this stage, the promise is said to be unsettled. Once the operation has completed, the promise is said to have been settled. A settled promise can result in two different outcomes:</h4>
+      <ul>
+        <li>Resolved ― the asynchronous operation was completed successfully.</li>
+        <li>Rejected ― the asynchronous operation didn’t work as expected, wasn't successfully completed or resulted in an error.</li>
+      </ul>
+
+      <h3>Great Analogy of a Promise</h3>
+      <h4>Imagine if a shady character gave you a red pill, and promised that if you took it, you'd be a superhero. Being an adventurous sort, you swallow the pill and wait to see what happens. You're currently in the pending phase of a promise, waiting to see what the result will be.<br>
+        Suddenly you find that you have the power to dodge bullets as if time was standing still! The promise has been resolved, and now you need to go off and use your newly acquired powers.<br>
+        But if nothing happens, you would reject the promise and warn people that a stranger is wandering around giving out red pills and peddling a fanciful story.<br>
+        This scenario puts a comic-book spin on the phases of a promise. There is a pending phase while you wait on the results of an operation (taking the pill). Then once the promise is settled, you deal with the results in an appropriate way ― by using your superpowers if the promise is resolved, or dealing with any problems if it doesn't work out.</h4>
+
+      <h3>Creating a Promise Syntax:</h3>
+      <p>
+        const promise = new Promise( (resolve, reject) => {<br>
+          // initialization code goes here<br>
+          if (success) {<br>
+              resolve(value);<br>
+          } else {<br>
+              reject(error);<br>
+          }<br>
+      });
+    </p>
+
+    <h3>Settled Promise</h3>
+    <h4>Once a promise has been settled, the then() method can be used to deal with the outcome. This method accepts two arguments. The first is a fulfilment function that’s called when the promise is resolved. Any data returned from the resolve() function will be passed along to this function. The second argument is a rejection function that’s called if the promise is rejected. Similar to the fulfilment function, the rejection function receives any data returned from the reject() function.</h4>
+    <h4>Example Syntax:</h4>
+    <p>promise.then( result => console.log(`Yes! I rolled a ${result}`), result => console.log(`Drat! ... I rolled a ${result}`) );</p>
+
+    <h4>Complete Example with Dice Roll:</h4>
+    <p>
+      const dice = {<br>
+        sides: 6,<br>
+            roll() {<br>
+                return Math.floor(this.sides * Math.random()) + 1;<br>
+            }<br>
+        }<br><br>
+        
+        console.log('Before the roll');<br><br>
+        
+        const roll = new Promise( (resolve,reject) => {<br>
+            const n = dice.roll();<br>
+            if(n > 1){<br>
+                setTimeout(()=>{resolve(n)},n*200);<br>
+            } else {<br>
+                setTimeout(()=>reject(n),n*200);<br>
+            }<br>
+        });<br><br>
+        
+        roll.then(result => console.log(`I rolled a ${result}`) )<br>
+        .catch(result => console.log(`Drat! ... I rolled a ${result}`) );<br><br>
+        
+        console.log('After the roll');<br>
+    </p>
+
+    <h3>Chaining Promises</h3>
+    <h4>Promises come into their own when multiple asynchronous tasks are required to be carried out one after the other. If each function that performs an asynchronous operation returns a promise, we can chain the then() methods together to form a sequential piece of code that’s easy to read. Each promise will only begin once the previous promise has been settled.</h4>
+    <h4>Example:</h4>
+      <p>
+        login(userName)<br>
+        .then(user => getPlayerInfo(user.id))<br>
+        .then(info => loadGame(info))<br>
+        .catch( throw error)
+      </p>
+
+    <h3>Returning Functions</h3>
+    <h4>A 'closure' is formed when the inner function is returned by the outer function, maintaining access to any variables declared inside the enclosing function.</h4>
+    <p>
+      function outer() {<br>
+        const outside = 'Outside!';<br>
+        function inner() {<br>
+            const inside = 'Inside!';<br>
+            console.log(outside);<br>
+            console.log(inside);<br>
+        }<br>
+        return inner;<br>
+    }
+    </p>
+
+    <h3>Pure Functions</h3>
+    <h4>A key aspect of functional programming is its use of pure functions. A pure function is a function that adheres to the following rules:</h4>
+    <ul>
+      <li>The return value of a pure function should only depend on the values provided as arguments. It doesn't rely on values from somewhere else in the program.</li>
+      <li>There are no side-effects. A pure function doesn't change any values or data elsewhere in the program. It only makes non-destructive data transformations and returns new values, rather than altering any of the underlying data.</li>
+      <li>Referential transparency. Given the same arguments, a pure function will always return the same result.</li>
+    </ul>
+
+    <h4>Any pure function must have:</h4>
+    <ul>
+      <li>At least one argument; otherwise the return value must depend on something other than the arguments of the function, breaking the first rule</li>
+      <li>A return value; otherwise there’s no point in the function (unless it has changed something else in the program – in which case, it’s broken the 'no side-effects' rule).</li>
+    </ul>
+
+    <h3>Currying</h3>
+    <h4>Currying is a process that involves the partial application of functions. It’s named after the logician Haskell Curry — not the spicy food — just like the programming language Haskell is. His work on a paper by Moses Schönfinkel lead to the development of this programming technique. A function is said to be curried when not all arguments have been supplied to the function, so it returns another function that retains the arguments already provided, and expects the remaining arguments that were omitted when the original function was called. A final result is only returned once all the expected arguments have eventually been provided.</h4>
+    <h4>Currying relies on higher-order functions that are able to return partially applied functions. All curried functions are higher-order functions because they return a function, but not all higher-order functions are curried.</h4>
+    <h3>A Video About Currying:</h3>
+    <iframe src="https://www.youtube.com/embed/iZLP4qOwY8I" width="560" height="315"></iframe>
+    <h3>Asynchronous</h3>
+    <h4>When a request for data is sent, the program doesn’t have to stop and wait for the response. It can carry on running, waiting for an event to fire when a response is received. By using callbacks to manage this, programs are able to run in an efficient way, avoiding lag as data is transferred back and forth.</h4>
+    </main>
+
+    <h3>Fetch API Video:</h3>
+    <iframe src="https://www.youtube.com/embed/drK6mdA9d_M" width="560" height="315"></iframe>
+    <h3>Fetch API Example Github Repo Links:</h3>
+    <ul>
+      <li><a href="https://github.com/gtjames/FetchExamples/tree/master/js">Bro. James Example</a></li>
+      <li><a href="https://github.com/mdn/fetch-examples">Chris Mills Example (found randomly online)</a></li>
+    </ul>
+    </body>
+</html>

@@ -71,7 +71,7 @@ function renderOneHike(hike) {
                       <p class="hidden">${hike.description}</p>
                       <h3 class="hidden">Directions</h3>
                       <p class= "hidden">${hike.directions}</p>
-                  
+                
           </div></div>`;
   
     return item;
