@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Week 8 Animations</title>
+    <style>
+        h2{
+            text-align: center;
+        }
+        /**Bicycle*/
+        #bike{
+            border:1px solid black;
+            width: 500px;
+            height: 100px;
+            padding:10px;
+            margin-left:auto;
+            margin-right:auto;
+            margin-bottom:1em;
+        }
+        @keyframes bike {
+            0% {
+            background-position: 0 0;
+            }
+            100% {
+            background-position: -360px 0;
+            }
+        }
+        @keyframes move {
+            0% {
+            transform: translateX(-230px);
+            }
+            100% {
+            transform: translateX(200px);
+            }
+        }    
+        #bike:after {
+            content: '';
+            width: 90px;
+            height: 92px;
+            background-image: url(/week8/images/bike_sprite.png);
+            display: block;
+            margin: auto;
+            animation: 0.4s steps(4, end) infinite 50ms bike, 2s linear infinite 50ms move;animation-play-state: paused;
+            }
+        #bike:hover:after {
+            animation-play-state: running;
+        }
+        /**Circle Bouncing*/
+        #wrapper{
+            height: 200px;
+            width: 200px;
+            border:1px solid black;
+            margin:auto;
+        }
+        #circle{
+            width: 100px;
+            height: 100px;  
+            border-radius: 50%;
+            animation: left-to-right 1s ease-in forwards infinite alternate;
+        }
+        #wrapper:hover #circle{
+            animation-play-state: paused;
+        }
+        @keyframes left-to-right{
+            0% {
+                transform: translateX(0);
+                background-color: #EDF719;
+            }
+            33%{
+                transform: translateY(100%);
+            }
+            66%{
+                transform: translateX(100%) translateY(100%);
+            }
+            100% {
+                transform: translateX(100%);
+                background-color: #CF2B14;
+            }
+        } 
+    </style>
+    </head>
+<body>
+    <header>
+        <h2>Animation Exercises</h2>
+    </header>
+    <main>
+	   <div id="bike"></div>
+       <div id="wrapper">
+           <div id="circle"></div>
+       </div>
+    </main>
+    </body>
+
+</html>

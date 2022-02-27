@@ -1,0 +1,15 @@
+div{
+    border: 5px solid black;
+    margin-bottom: 5%;
+}
+
+h3, p {
+    margin-left: 5%;
+}
+
+.extraInfo{
+    display: none;
+}
+div:hover .extraInfo{
+    display:block;
+}

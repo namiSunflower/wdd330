@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Week 8 Notes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h2>Week 8 Notes</h2>
+    </header>
+    <main>
+        <h3>Questions:</h3>
+        <p id="questions">No questions for this week</p>
+      
+        <h3>Notes About Transformations:</h3>
+        <ol>
+          <li>It doesn’t work with inline-block elements</li>
+          <li>When using an inline block element (span, a, select, textarea, label etc.) use display: inline-block to fix transform issue</li>
+          <li>Transform property can contain plenty of methods and the methods are applied in the order they appear from left to right</li>
+        </ol>
+        <h3>Left-Right (TranslateX)</h3>
+        <h4>-X value = left</h4>
+        <h4>X value = right</h4>
+        <h3>Up-Down (TranslateY)</h3>
+        <h4>-Y value = up</h4>
+        <h4>Y value = down</h4>
+
+        <h3>Scaling</h3>
+        <h4>Scaling has no impact in the overall impact of the document flow.</h4>
+        <h4>Example Image:</h4>
+        <img src="/week8/images/scale.png" alt="image with word scaled">
+
+        <h3>Rotation</h3>
+        <h4>The rotate() function rotates an element around the point of origin by a specified angle value. As with scale, by default the point of origin is the element’s center. Generally, angles are declared in degrees, with positive degrees moving clockwise and negative moving counterclockwise.</h4>
+
+        <h3>Skew</h3>
+        <h4>The skew(x,y) function specifies a skew along the x and y axes. As you’d expect, the x specifies the skew on the x axis, and the y specifies the skew on the y axis. If the second parameter is omitted, the skew will only occur on the x axis.</h4>
+        
+        <h3>Transition Functions</h3>
+        <ul>
+          <li>transition-delay: specifies a delay (in seconds) for transition effect</li>
+          <li>transition-duration: specifies how many seconds or milliseconds a transition effect takes to complete</li>
+          <li>transition-property: specifies the name of the CSS property the transition effect is for</li>
+          <li>transition-timing-function: Specifies the speed curve of the transition effect</li>
+        </ul>
+
+        <h3>Transition Shorthand Syntax</h3>
+        <p>transition: property || duration || timing-function || delay [, ...];</p>
+
+        <h3>Transition Timing Functions</h3>
+        <ul>
+          <li>ease: slow start, speeds up, ends quickly</li>
+          <li>linear: animates at a constant speed</li>
+          <li>ease-in: slow start, speeds up, stops abruptly</li>
+          <li>ease-out: full speed start then slows progressively as it reaches the conclusion of the transition.</li>
+          <li>ease-in-out: similar to ease, but accelerates more sharply at the beginning</li>
+          <li>cubic-bezier(n,n,n,n): lets user define their own values in a cubic-bezier function</li>
+        </ul>
+
+        <h3>Useful link for Animation Properties:</h3>
+        <a href="https://www.w3schools.com/cssref/css3_pr_animation-timing-function.asp">W3Schools Animation Properties</a>
+
+        <h3>Animation Shorthand Syntax</h3>
+        <p>animation: animation-name || animation-duration || animation-timing-function || animation-delay || animation-iteration-count || animation-direction || animation-fill-mode || animation-play-state</p>
+
+        <h3>SVG Codepen Link (By Myself):</h3>
+        <a href="https://codepen.io/namisunflower/pen/jOPVzjX">SVG Link</a>
+      </main>
+    </body>
+</html>
