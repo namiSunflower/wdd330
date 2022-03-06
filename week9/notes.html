@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Week 9 Notes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h2>Week 9 Notes</h2>
+    </header>
+    <main>
+        <h3>Questions:</h3>
+        <p id="questions">No questions for this week</p>
+      
+        <h3>Browser Object Model</h3>
+        <h4>The Browser Object Model (or BOM for short) is a collection of properties and methods that contain information about the browser and computer screen.</h4>
+        
+        <h3>Window Dialog Method/s</h3>
+        <ol>
+          <li>window.confirm(): will stop the execution of the program and display a confirmation dialog that shows the message provided as an argument, and giving the options of OK or Cancel.</li>
+          <li>window.prompt(): displays a dialog that shows a message provided as an argument, as well as an input field that allows the user to enter text.</li>
+        </ol>
+
+        <h4>Example Syntax (window.confirm):</h4>
+        <p>window.confirm('Do you wish to continue?');</p>
+        
+        <h4>Example Syntax (window.prompt):</h4>
+        <p>window.prompt('Please enter your dog's name:');</p>
+
+        <h3>Window Browser & Location Info Method/s</h3>
+        <ol>
+          <li>window.navigator.userAgent: the userAgent property will return information about the browser and operating system being used.</li>
+          <li>window.location.href: contains a number of properties that provide information about different fragments of the URL of the current page.</li>
+          <li>window.location.protocol: returns a string describing the protocol used (such as http, https, pop2, ftp etc.).</li>
+          <li>window.location.host: returns a string describing the domain of the current URL and the port number (often omitted if the default port 80 is used).</li>
+          <li>window.location.hostname: returns a string describing the domain of the current URL.</li>
+          <li>window.location.port: returns a string describing the port number, although it will return an empty string if the port is not explicitly stated in the URL.</li>
+          <li>window.location.search: returns a string that starts with a “?” followed by the query string parameters.</li>
+          <li>window.navigator.pathname: returns a string of the path that follows the domain.</li>
+          <li>window.location.hash: returns a string that starts with a “#” followed by the fragment identifier. It returns an empty string if there is no fragment identifier.</li>
+          <li>window.location.origin: returns a string that shows the protocol and domain where the current page originated from.</li>
+          <li>window.location.toString(): returns a string containing the whole URL</li>
+        </ol>
+
+        <h3>Window Loading/Reloading Method/s</h3>
+        <ol>
+          <li>window.location.reload: can be used to force a reload of the current page. If it’s given a parameter of true, it will force the browser to reload the page from the server, instead of using a cached page.</li>
+          <li>window.location.assign(): can be used to load another resource from a URL provided as a parameter</li>
+          <li>window.location.replace(): almost the same as the assign() method, except the current page will not be stored in the session history, so the user will be unable to navigate back to it using the back button.</li>
+        </ol>
+
+        <h3>Window Browser History Method/s</h3>
+        <h4>This property can be used to access information about any previously visited pages in the current browser session</h4>
+        <ol>
+          <li>window.history.length: shows how many pages have been visited before arriving at the current page.</li>
+          <li>window.history.go:  can be used to go to a specific page, where 0 is the current page.</li>
+        </ol>
+
+        <h4>Example Syntax (history.go):</h4>
+        <p>window.history.go(1); // goes forward 1 page<br>
+          window.history.go(0); // reloads the current page<br>
+          window.history.go(-1); // goes back 1 page</p>
+
+        <h3>Controlling the Window Method/s</h3>
+        <ol>
+          <li>window.open(URL, name, specs, replace): shows how many pages have been visited before arriving at the current page.</li>
+          <li>window.close(): can be used to close a window, assuming you have a reference to it.</li>
+          <li>window.resizeTo(width, height): takes two parameters that specify the width and height of the resized window’s dimensions.</li>
+        </ol>
+
+        <h3>Window Screen Info Method/s</h3>
+        <ol>
+          <li>window.screen.height: return height of screen in pixels.</li>
+          <li>window.screen.height: return width of screen in pixels</li>
+          <li>window.screen.availWidth: return width of screen in pixels, excluding any operating system menus.</li>
+          <li>window.screen.availHeight: return height of screen in pixels, excluding any operating system menus.</li>
+          <li>window.screen.colorDepth: can be used to find the color bit depth of the user’s monitor, although there are few use cases for doing this other than collecting user statistics.</li>
+        </ol>
+
+        <h3>Window Timing Method/s</h3>
+        <ol>
+          <li>window.setTimeout(function, milliseconds): accepts a callback to a function as its first parameter and a number of milliseconds as its second parameter.;</li>
+          <li>window.clearTimeout(function): cancels timeout.</li>
+          <li>window.setInterval(function, milliseconds): works in a similar way to window.setTimeout(), except that it will repeatedly invoke the callback function after every given number of milliseconds..</li>
+          <li>window.clearInterval(function): cancels interval.</li>
+        </ol>
+
+        <h3>Window Animation Method/s</h3>
+        <ol>
+          <li>window.requestAnimationFrame(callback): works in much the same way as the window.setInterval() method, although it has a number of improvements to optimize its performance. These include making the most of the browser’s built-in graphics-handling capabilities, and not running the animation when the tab is inactive, resulting in a much smoother performance. </li>
+        </ol>
+        <h4>Example Syntax (requestAnimationFrame):</h4>
+        <p>
+          const squareElement = document.getElementById('square');<br>
+          let angle = 0;<br><br>
+
+          function rotate() {<br>
+              angle = (angle + 2)%360;<br>
+              squareElement.style.transform = `rotate(${angle}deg)`<br>
+              window.requestAnimationFrame(rotate);<br>
+          }<br><br>
+
+          const id = requestAnimationFrame(rotate);
+        </p>
+      </main>
+    </body>
+</html>

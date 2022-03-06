@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Window Information Exercise</title>
+    <style>
+        #width, #height, #url, #dom{
+            font-size:1.5em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>Window Information Exercise</h2>
+    </header>
+    <main>
+        <h3>Window Width:</h3><span id="width"></span>
+        <h3>Window Height:</h3><span id="height"></span>
+        <h3>Current URL:</h3><span id="url"></span>
+        <h3>Current domain</h3><span id="dom"></span>
+    </main>
+    <script>
+        let w = window.screen.width;
+        let h = window.screen.height;
+        let u = window.location.href;
+        let d = window.location.hostname;
+        document.getElementById("width").innerHTML = w;
+        document.getElementById("height").innerHTML = h;
+        document.getElementById("url").innerHTML = u;
+        document.getElementById("dom").innerHTML = d;
+    </script>
+    </body>
+
+</html>

@@ -1,0 +1,28 @@
+
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker|Roboto+Slab|Russo+One&display=swap');
+#container{
+    margin:0 auto;
+    width:100%;
+    text-align:center;
+    
+}
+li{
+    font-size:18px;
+    font-family:'Russo One', Gadget, sans-serif;
+}
+a:link{
+    color:#000;
+    text-decoration: none;
+}
+
+h3{
+    font-weight:bold;
+    font-family:'Permanent Marker', Charcoal, sans-serif;
+    color:#b30000;
+}
+body{
+    background-color:#d3d3d3;
+    font-weight: bolder;
+}
+
+

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>window.open Exercise</title>
+    <style>
+        input{
+            font-size: 2em;
+            padding: 1em;
+            background-color: red;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>window.open Exercise</h2>
+    </header>
+    <main>
+        <p>If you're on full screen and the video just opens a new tab, please resize your window to a smaller screen and refresh the site.</p>
+        <input type="button" value="Close pop-up" onclick="openVid.close()">
+    </main>
+    <script>
+        const openVid = window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ','SitePoint','width=500,height=500,top=100,left=500, toolbar=no,menubar=no,scrollbars=no, resizable=yes, status=no');
+    </script>
+    </body>
+
+</html>
