@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="utf-8" />
+        <title>Exercise for Form Validation & Using Fetch with Headers</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <style>
+            input{
+                display:block;
+            }
+            label{
+                font-size:1.2em;
+            }
+            #submit-btn{
+                padding: 10px;
+                font-size: 1em;
+                color: white;
+                background-color: green;
+                border: none;
+            }
+            input:invalid {
+                border: 1px solid red;
+            }
+            .invisible{
+                display:none;
+            }
+            .style{
+                border: 1px solid black;
+                margin-top: 1em;
+                padding: 1em;
+            }
+            form{
+                border: 5px dashed black;
+                padding: 1em;
+            }
+            h2{
+                font-family: Arial, Helvetica, sans-serif;
+            }
+        </style>
+    </head>
+
+    <body>
+        <main>
+            <form id="form" method="post">
+                <h2>Form Details:</h2>
+                <label for = "name">Name:</label>
+                <input type="text" id="name" maxlength="30" required><br>
+                <label for = "email">Email:</label>
+                <input type="email" id="email" required><br>
+                <label for = "age">Age:</label><br>
+                <span class="infoSpan">You must be 16 or above to register for an account.</span> 
+                <input type="number" id="age"  min="16" required><br>
+                <label for="telephone">Telephone Number:</label><br>
+                <span>(Optional) Format: 123-45-678</span><br>
+                <input type="tel" id="telephone" name="phone" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"><br>
+                <label for = "password">Password:</label><br>
+                <span>Passwords must be at least 8 characters with at least 1 number, 1 capital letter and 1 special character</span> 
+                <input type="password" id="password" pattern="(?=^.{8,}$)(?=.*\d)(?=.*\W+)(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required><br>
+                <input type="submit" value="Submit" id="submit-btn">
+            </form>
+            <div id="displayResult"></div>
+        </main>
+    </body>
+    <script>
+        var form = document.getElementById('form');
+
+        form.addEventListener('submit', function(e){
+            //Prevent auto submission of form
+
+            e.preventDefault()
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const age = document.getElementById('age').value;
+            const telephone = document.getElementById('telephone').value;
+            const password = document.getElementById('password').value;
+
+            //from API guide
+            fetch('https://jsonplaceholder.typicode.com/posts', {
+                method: 'POST',
+                body: JSON.stringify({
+                    name: name,
+                    email: email,
+                    age: age,
+                    telephone: telephone,
+                    password: password
+                }),
+                headers: {
+                    'Content-type': 'application/json; charset=UTF-8',
+                },
+                })
+                .then(function(response){
+                    return response.json();
+                })
+                .then(function(data){
+                    console.log(data);
+
+                    let phoneDisplay = `Telephone#: ${telephone}<br>`;
+                    if(telephone.length == 0){
+                        phoneDisplay = " ";
+                    }
+                    //console.log(telephone.length);
+                    let displayResult = document.getElementById('displayResult');
+                    displayResult.classList.add('style');
+                    
+                    document.getElementById('displayResult').innerHTML = `<h2>User Account Details:</h2><h3>Name: ${data.name}!<br>
+                        Age: ${age}<br>Email: ${email}<br>${phoneDisplay}Thank you for registering!`;
+                })
+        })
+    </script>
+</html>
