@@ -2,41 +2,43 @@ const textElement = document.getElementById('text')
 const optionButtonsElement = document.getElementById('option-buttons')
 
 let state = {}
-//let rand = Math.floor(Math.random(9) * 1) 
-let battleText = [
-  "You have won the battle!", "Success! You've won!", "You have lost the battle!", "Unfortunately, you have lost the battle.."
-];
 //Encountered Pokemon
 let pokeArray = [];
 //Caught Pokemon
-let caughtPokemon = []
+let caughtPokemon = [];
+
+
 
 let getIt =  async url =>{
   const result = await fetch(url);
   const data = result.json();
   data.then(elem =>{
       getName(elem);
-      getType(elem);
-      getImg(elem);
+      // getImg(elem);
   })
 }
+
+const baseURl = "https://pokeapi.co/api/v2/pokemon-form/";
+const completeURL = baseURl + randomNum() + "/";
+// randomNum();
 
 function randomNum(){
   let num = Math.floor(Math.random() * 898) + 1;
   return num;
 }
 
-function getImg(elem){
-  let imgPath;
-  let percent = Math.random();
-  if (percent < 0.25)
-      //Shiny Pokemon
-      imgPath = elem.sprites.front_shiny;
-  else {
-      //Regular Pokemon
-      imgPath = elem.sprites.front_default;
-  }
-}
+// function getImg(elem){
+//   let imgPath;
+//   let percent = Math.random();
+//   if (percent < 0.25)
+//       //Shiny Pokemon
+//       imgPath = elem.sprites.front_shiny;
+//   else {
+//       //Regular Pokemon
+//       imgPath = elem.sprites.front_default;
+//   }
+// }
+getIt(completeURL);
 
 function getName(elem){
   let pokeName = {};
@@ -47,72 +49,33 @@ function getName(elem){
       pokeArray.push(name);
       pokeArray.push(pokeName);
   }
+  localStorage.setItem("pokemonList", JSON.stringify(pokeArray));
 }
 
-function getType(elem){
-  let type = {};
-  if(elem.types.length > 1){
-          let type0 = elem.types[0].type.name
-          let type1 = elem.types[1].type.name
-          console.log(type0)
-          console.log(type1)
-          if(!pokeArray.find(element => element[type0] == true) && !pokeArray.find(element => element[type1] == true)){
-              type[`${elem.types[0].type.name}`] = true;
-              type[`${elem.types[1].type.name}`] = true;
-              pokeArray.push(type);
-          }
-          else if (!pokeArray.find(element => element[type0] == true) && pokeArray.find(element => element[type1] == true)) 
-          {
-              type[`${elem.types[0].type.name}`] = true;
-              pokeArray.push(type)
-          }
-          else if (!pokeArray.find(element => element[type1] == true) && pokeArray.find(element => element[type0] == true)) 
-          {
-              type[`${elem.types[1].type.name}`] = true;
-              pokeArray.push(type)
-          }
-      }
-      else{
-          let type0 = elem.types[0].type.name
-          if(!pokeArray.find(element => element[type0] == true)){
-              type[`${elem.types[0].type.name}`] = true;
-              pokeArray.push(type);
-          }
-      }
-      localStorage.setItem("pokemonList", JSON.stringify(pokeArray));    
-}
-
-function catchPokemon(index){
+function catchPokemon(/*index*/){
   let percent = Math.random();
   if (percent < 0.25){
       //Did not catch Pokemon
       return `After throwing a Pokeball... Oh no! The pokemon broke free and ran away!`;
   }
   else {
-      //Caught Pokemon
-      for(let i=index; i<3; i++){
-        caughtPokemon.push(JSON.parse(localStorage.getItem("pokemonList"))[i]);
-      }
+      // //Caught Pokemon
+      // caughtPokemon.push(JSON.parse(localStorage.getItem("pokemonList"))[index]);
+      
       return `You have successfully caught the Pokemon!`;
   }
 }
 
-function displayImg(imgPath){
-  const img = document.createElement('img');
-  img.src = imgPath;
-  const div = document.getElementById('placeholder');
-  div.append(img);
-}
 function startGame() {
   // pokeArray = JSON.parse(localStorage.getItem("e"));
    state = {}
    localStorage.setItem("story", JSON.stringify(textNodes));
-  //  if(parseInt(localStorage.getItem("currentText")) < 1){
-     showTextNode(65);
-  //  }
-  //  else{
-  //   showTextNode(parseInt(localStorage.getItem("currentText")));
-  //  }
+   if(parseInt(localStorage.getItem("currentText")) < 1){
+     showTextNode(1);
+   }
+   else{
+    showTextNode(parseInt(localStorage.getItem("currentText")));
+   }
 }
 
 function showTextNode(textNodeIndex) {
@@ -147,12 +110,7 @@ function selectOption(option) {
   if (currentOne <= 0) {
     return startGame();
   }
-  else if(currentOne == 65 || currentOne == 67){
-    const baseURl = "https://pokeapi.co/api/v2/pokemon-form/";
-    const completeURL = baseURl + randomNum() + "/";
-    // randomNum();
-    getIt(completeURL);
-  }
+
   console.log(currentOne);
   localStorage.setItem("currentState", JSON.stringify(option.setState));
   if(JSON.parse(localStorage.getItem("currentState") != "undefined")){
@@ -161,19 +119,10 @@ function selectOption(option) {
   localStorage.setItem("state", JSON.stringify(state));
   showTextNode(parseInt(localStorage.getItem("currentText")));
 }
-
-function saveToLs(key, value){
-    localStorage.setItem(key, value);
-}
-
-function retrieveFromLs(key){ 
-  parseInt(localStorage.getItem(key));
-}
-
 let pokemon= JSON.parse(localStorage.getItem("pokemonList"));
 
 
-export const textNodes = [
+const textNodes = [
   {
     id: 1,
     text: `*Alarm clock starts ringing*`,
@@ -463,17 +412,17 @@ export const textNodes = [
     options: [
       {
         text: `Bulbasaur!`,
-        setState: {Bulbasaur: true, Squirtle: false, Charmander: false, grass: true, water: false, fire: false},
+        setState: {Bulbasaur: true, Squirtle: false, Charmander: false},
         nextText: 28,
       },
       {
         text: `Squirtle!`,
-        setState: {Bulbasaur: false, Squirtle: true, Charmander: false, grass: false, water: true, fire: false},
+        setState: {Bulbasaur: false, Squirtle: true, Charmander: false},
         nextText: 29,
       },
       {
         text: `Charmander!`,
-        setState: {Bulbasaur: true, Squirtle: false, Charmander: false, grass: false, water: false, fire: true},
+        setState: {Bulbasaur: true, Squirtle: false, Charmander: false},
         nextText: 30,
       },
     ]
@@ -882,10 +831,10 @@ export const textNodes = [
   },
   {
     id: 63,
-    text: `You first head to your home and find that your mom is already readily waiting for your arrival with the key in her hand by the door. It turns out she has already been informed by your dad about your mission. You take the key and your mom tells you to be careful of the wild Pokemon in Viridian Forest.`, 
+    text: `You first head to your home and find that your mom is already readily waiting for your arrival with the key in her hand by the door. It turns out she has already been informed by your dad about your mission. You take the key and your mom tells you to be careful of the wild Pokemon in Viridian Forest. She also gives a final reminder of leaving your bicycle at home instead since you wouldn't be able to go through any of tall towering leaf blades in the forest.`, 
     options: [
       {
-        text: `Head to Viridian Forest`,
+        text: `Leave bicycle at home and head to Viridian Forest`,
         nextText: 64,
       },
     ]
@@ -893,16 +842,6 @@ export const textNodes = [
   {
     id: 64,
     text: `You reach Viridian Forest and discover it's filled with very tall grass. There's no other way to reach Pewter City but to also cross the areas filled with tall grass. You've been warned many times by your teachers not to get close to the tall grass since that is where wild Pokemon can be found, and most of the wild Pokemon are territorial and can start attacking you any time. Since you have your first Pokemon with you, you feel safer knowing that it can help you while engaging in these unexpected battles with the wild Pokemon. You also think to yourself that you might even have the chance to catch new Pokemon in the process too.`, 
-    options: [
-      {
-        text: `Trudge carefully and forward towards the tall grass`,
-        nextText: 65,
-      },
-    ]
-  },
-  {
-    id: 65,
-    text: `You hope for the best and carefully enter the tall grass. It takes a while for you to know where you're going, but eventually you adapt to the new environment and start heading the direction to Pewter City through the grass. But all of a sudden..`, 
     options: [
       {
         text: `Trudge carefully and forward towards the tall grass`,
@@ -981,15 +920,623 @@ export const textNodes = [
   },
   {
     id: 72,
-    text: `You spend a moment envisioning being inside one of the gyms and winning a badge. But you realize now's not the time to get carried away! `, 
+    text: `You spend a moment envisioning being inside one of the gyms and winning a badge. But you realize now's not the time to get carried away! You are on an important mission to save missing Pokemon!`, 
     options: [
       {
-        text: `Continue`,
-        nextText: 72,
+        text: `Stop daydreaming and visit your dad's office.`,
+        nextText: 73,
       },
 
     ]
   },
+  {
+    id: 73,
+    text: `It takes a bit of time for you to recall the directions your dad's office, but you eventually find it. It's just a white building with a standard small office design next to the Pokemart.`, 
+    options: [
+      {
+        text: `Open office door`,
+        nextText: 74,
+      },
+    ]
+  },
+  {
+    id: 74,
+    text: `Wow! You're impressed by how clean the office is even if your dad stays works there with other investigators for the most part. You open your dad's private quarters and open every cabinet to look for the Mew's DNA. It doesn't take that long until you see a small with purple liquid inside. You grab the vial carefully and place it inside your left jeans pocket. You always use that pocket whenever you find something small and valuable because it also has a zipper to keep things very secure.`, 
+    options: [
+      {
+        text: `Leave`,
+        nextText: 75,
+      },
+    ]
+  },
+  {
+    id: 75,
+    text: `You head outside the office and make your way to a shortcut to Pallet Town, where you don't have to traverse back through the forest again. However, on your way there, you are stopped by an old man while lying down on a reclining chair.`, 
+    options: [
+      {
+        text: `Explain situation to the old man`,
+        nextText: 76,
+      },
+    ]
+  },
+  {
+    id: 75,
+    text: `You get the impression that the old man never really heard anything you said. "Unfortunately young'un, I would love to let you pass this way to travel in the cave back to Pallet Town again and reunite with your friends. However.." He stoppped miday through his sentence and starts falling asleep! You try waking him up again, and thankfully he does! "Oh sorry about that! Now where was I again? Oh right, right! You can't pass this way since the caves are very damp, and there's no use in putting torches inside. It's dark and you'll just lose your way inside."`, 
+    options: [
+      {
+        text: `Maybe there's another way?`,
+        nextText: 76,
+      },
+    ]
+  },
+  {
+    id: 76,
+    text: `"There is no other way", the old man says with a more serious tone. "I've also heard some of the members in Team Rocket are inside! It's better if you come prepared by teaching your Pokemon how to use flash!"`, 
+    options: [
+      {
+        text: `How can I get flash?`,
+        nextText: 77,
+      },
+      {
+        text: `What is flash?`,
+        nextText: 77,
+      },
+    ]
+  },
+  {
+    id: 77,
+    text: `"Flash is a Pokemon move that can blind a target. It can also be used to illuminate caves such as the dark cave I'm guarding", explain the old man as his tone shifts to a less serious one. "You can get flash by defeating Pewter City's gym leader, Brock!"`, 
+    options: [
+      {
+        text: `Continue`,
+        nextText: 78,
+      }
+    ]
+  },
+  {
+    id: 78,
+    text: `You've heard of Brock ever since you were in first-grade. He's a tough gym leader in charge of Pewter City's gym and likes to use rock type Pokemon.`, 
+    options: [
+      {
+        text: `If there's truly no other way around it, then I'll do my best to beat his Pokemon!`,
+        nextText: 79,
+      }
+    ]
+  },
+  {
+    id: 79,
+    text: `"That's the spirit! Say, I remembered something highly important about Brock as well." But before you get to hear the rest of what the old man says, he starts dozing off again and snoring. Better leave him be and let him rest, but now you absolutely need to hurry and go to Pewter Gym.`, 
+    options: [
+      {
+        text: `Head to Pewter Gym.`,
+        nextText: 80,
+      }
+    ]
+  },
+  {
+    id: 80,
+    text: `You retrace your steps from where you started and travel to the other way where Pewter Gym is located. You're surprised it's still open and how there are no people panicking about the recent disappearances. However, you realize that only researchers like Prof. Oak, the police, or important government officials are probably the only ones who know about it. As you make your way inside of Pewter Gym, you debate with yourself whether it's better to know or not know what's really going on.`, 
+    options: [
+      {
+        text: `Enter gym`,
+        nextText: 81,
+      }
+    ]
+  },
+  {
+    id: 81,
+    text: `After you enter the gym, you're surprised to see only the gym leader there! Normally, other trainers are also there you need to battle with. But you could only see Brock standing on a white stony platform at the center of the gym. "Welcome, new challenger!", Brock greets.`, 
+    options: [
+      {
+        text: `Where's everybody else?`,
+        nextText: 82,
+      },
+      {
+        text: `Tell Brock how urgent it is for him to teach you the Pokemon move, flash`,
+        nextText: 83,
+      }
+    ]
+  },
+  {
+    id: 82,
+    text: `"Well since I'm the gym leader, I'm also in charge of the other trainers here", Brock explains. "I sent them home in the meantime to keep an eye on their Pokemon since I heard that some people from Team Rocket are currently exploring the caves. I don't exactly know what they're up to but Team Rocket always spells trouble no matter where they are, and they always want to steal people's Pokemon."`, 
+    options: [
+      {
+        text: `You're a good leader Brock`,
+        nextText: 83,
+      },
+      {
+        text: `Tell Brock how urgent it is for him to teach you the Pokemon move, flash`,
+        nextText: 83,
+      }
+    ]
+  },
+  {
+    id: 83,
+    text: `Before you have the chance to explain how urgent you need to learn flash, Brock's stony Pokemon companion lets out a roar letting you know that it's up for battle! You blurt out the incident of Pokemon disappearning, but it doesn't look like Brock is actively trying to listen to you as, he too, is pumped up for a Pokemon battle!`, 
+    options: [
+      {
+        text: `Negotiate with Brock`,
+        nextText: 84,
+      },
+      {
+        text: `Enter battle!`,
+        nextText: 85,
+      },
+    ]
+  },
+  {
+    id: 84,
+    text: `You do your best to negotiate with Brock and convince him how it might be better if he just teaches you flash without engaging in any battles because his Pokemon might start vanishing too! But your negotiations fall on deaf ears as Brock starts shouting an attacking command to his Onyx.`, 
+    options: [
+      {
+        text: `Try to stop Brock and negotiate again`,
+        nextText: 86,
+      },
+      {
+        text: `Enter battle!`,
+        nextText: 85,
+      }
+    ]
+  },
+  {
+    id: 86,
+    text: `You try negotiating with Brock once more, but it fails again. Brock's Onyx smacks down your Pokemon! Your Pokemon takes a heavy hit from the attack!`, 
+    options: [
+      {
+        text: `Enter battle!`,
+        nextText: 87,
+      },
+    ]
+  },
+  {
+    id: 87,
+    text: `Now, you have absolutely no choice but to engage in battle! Although your Pokemon may have been hurt, it is still fully ready to beat Brock's onyx in battle.`, 
+    options: [
+      {
+        text: `Attack!`,
+        nextText: 85,
+      }
+    ]
+  },
+  {
+    id: 85,
+    text: `You confidently command your Pokemon with attack-moves that favor to your advantage. Eventually, your opponent's Pokemon faints. Hurrah! You won your first gym battle!`, 
+    options: [
+      {
+        text: `Finally, you can learn flash!`,
+        nextText: 88,
+      }
+    ]
+  },
+  {
+    id: 88,
+    text: `"Argh! I've underestimated you!", Brock says. "But your moves and tactics are simply commendable! Since you've defeated me, you also earn the Boulder badge!" He gives you the boulder badge, which looks like a grey shiny rock. "I'll teach your Pokemon how to use flash too!"`, 
+    options: [
+      {
+        setState: {boulder: true},
+        text: `Continue`,
+        nextText: 89,
+      }
+    ]
+  },
+  {
+    id: 89,
+    text: `You thank Brock and start travelling back to the old man guarding the cave. The old man is still sleeping in the same position from when you last saw him. He wakes up after hearing your nearing footsteps. "Well done!" he claps. "I've never underestimated you young'un, now off you go to those caves!" he mentioned before falling asleep again. You start entering the dark caves..`, 
+    options: [
+      {
+        text: `Continue`,
+        nextText: 90,
+      }
+    ]
+  },
+  {
+    id: 90,
+    text: `The old man was completely right, you couldn't see anything at all! You tell your Pokemon to use flash, and it proudly shows of its new learned skill and illuminates the dark cave.`, 
+    options: [
+      {
+        text: `Continue`,
+        nextText: 91,
+      }
+    ]
+  },
+  {
+    id: 91,
+    text: `The further you moved deeper in the cave, you are at a crosswords with two open paths to your left and right. The left path sounds like it's full of bats by the sounds you hear while the right path seems darker and you could hear the sound of streaming water.`, 
+    options: [
+      {
+        text: `Go left`,
+        nextText: 93,
+      },
+      {
+        text: `Go right`,
+        nextText: 94,
+      },
+    ]
+  },
+  {
+    id: 93,
+    text: `You head to the left path, and...`, 
+    options: [
+      {
+        text: `Go left`,
+        nextText: 95,
+      },
+    ]
+  },
+  {
+    id: 94,
+    text: `You head to the right path, and you discover that the source of the streaming water sounds were coming from a pool of water that was formed from the heavy drops of water from the stalactites covering the cave's ceiling. You avoid getting yourself wet by the water and head towards a narrow opening where a bright light is emitting from.`, 
+    options: [
+      {
+        text: `Continue`,
+        nextText: 99,
+      },
+    ]
+  },
+  {
+    id: 95,
+    text: `A wild Zubat has appeared out of nowhere and blocks your way outside the cave!`, 
+    options: [
+      {
+        text: `Battle!`,
+        nextText: 97,
+      },
+    ]
+  },
+  {
+    id: 97,
+    text: `Luckily, you managed to defeat the Pokemon`, 
+    options: [
+      {
+        text: `Continue`,
+        nextText: 99,
+      },
+    ]
+  },
+  {
+    id: 99,
+    text: `Finally! You've reached the end of the cave and are now back in Pallet Town!`, 
+    options: [
+      {
+        text: `Go back to Prof. Oak's lab`,
+        nextText: 100,
+      }
+    ]
+  },
+  {
+    id: 100,
+    text: `You enter Prof. Oak's lab where you see no familiar faces but men and women dress in all black.`, 
+    options: [
+      {
+        text: `They're from Team Rocket!`,
+        nextText: 101,
+      }
+    ]
+  },
+  {
+    id: 101,
+    text: `You recognize that those all-black uniforms are from Team Rocket! You start worrying for Prof. Oak, the researchers', and Gary's safety!`, 
+    options: [
+      {
+        text: `Confront Team Rocket`,
+        nextText: 102,
+      }
+    ]
+  },
+  {
+    id: 102,
+    text: `You demand for your friends' whereabouts to one of the members of Team Rocket standing idly while examining one of the lab machines. "Hey! Scram kid! I don't know what the heck you're talking about, but clearly I'm not getting paid enough to be bothered by a kid while I admire the works from wonderful scientific breakthroughs!" The Team Rocket grunt, then calls for his Mightyena to go outside of his Pokeball.`, 
+    options: [
+      {
+        text: `Enter Battle!`,
+        nextText: 104,
+      },
+    ]
+  },
+  {
+    id: 104,
+    text: `You call your Pokemon to battle the grunt's Mightyena. "Mightyena! Use Crunch!", the grunt shouts. Your Pokemon takes heavy damage from that attack. Now it's your turn to think of a move!`, 
+    options: [
+      {
+        text: `Protect itself by evading the opponent's upcoming attack`,
+        nextText: 107,
+      },
+      {
+        text: `Use a highly aggressive attack move!`,
+        nextText: 106,
+      },
+      {
+        text: `Use a Pokemon substitute dummy to direct all upcoming opponent's attacks straight to the dummy`,
+        nextText: 160,
+      },
+    ]
+  },
+  {
+    id: 107,
+    text: `Your Pokemon quickly evades in a speed of a flash. The Mightyena was tricked as it headbutted straight into a wall. It starts to get dizzy and confused!`, 
+    options: [
+      {
+        text: `Continue evading`,
+        nextText: 108,
+      },
+      {
+        text: `Use most damage-dealing attack!`,
+        nextText: 110,
+      },
+    ]
+  },
+  {
+    id: 108,
+    text: `You tell your Pokemon to keep evading, but discover it was a complete waste since the Mightyena started to attack itself because of its confused state.`, 
+    options: [
+      {
+        text: `Use most damage-dealing attack!`,
+        nextText: 110,
+      },
+    ]
+  },
+  {
+    id: 110,
+    text: `You shout out the most damage-dealing attack you know of, and your Pokemon emerges victorious as the opponent's Pokemon faints!`, 
+    options: [
+      {
+        setState: {flawlessVictory: true},
+        text: `Continue`,
+        nextText: 115,
+      },
+    ]
+  },
+  {
+    id: 106,
+    text: `You tell your Pokemon to counter-attack aggressively, but your opponent is one step ahead of you! He has predicted that you'd attack offensively back and has evaded your attack! Your poor Pokemon bumps its head on the wall from leaping towards the Mightyena in a burst of fury.`, 
+    options: [
+      {
+        text: `Continue`,
+        nextText: 111,
+      },
+    ]
+  },
+  {
+    id: 160,
+    text: `Your Pokemon swaps places with a Pokemon dummy. Good thinking! However, you were unable to predict the impact of your opponent's upcoming attack! It destroys the dummy with its strong headbutt and hurt your Pokemon in the process! Your Pokemon has taken a lot of damage from the attack.`, 
+    options: [
+      {
+        text: `Continue`,
+        nextText: 111,
+      },
+    ]
+  },
+  {
+    id: 111,
+    text: `You were able to exchange some heavy damage back to your enemy, but eventually, your Pokemon gets exhausted and starts struggling to keep up with the Mightyena's stamina. One more critical hit by the Mightyena, and you're certain that your Pokemon will faint. "Stop that!" Just then, you hear someone screaming..`, 
+    options: [
+      {
+        text: `Continue`,
+        nextText: 112,
+      },
+    ]
+  },
+  {
+    id: 112,
+    text: `You look behind you and find Gary! He helps by sending his Pokemon to battle alongside your Pokemon against the opponent. Finally, you deal the finishing attack to the Mightyena, and the Mightyena faints. You can't believe that just a second ago, you were certain you'd lose, but the tables have turned thanks to Gary's assistance`, 
+    options: [
+      {
+        text: `Thank Gary`,
+        nextText: 113,
+      },
+    ]
+  },
+  {
+    id: 113,
+    text: `"Hey don't sweat it, that's just what all strong Pokemon trainers like myself do!" Gary replies. Classic Gary, but you start to remember that his Pokemon disappeared! How was he able to find a new one?`, 
+    options: [
+      {
+        text: `Ask Gary`,
+        nextText: 114,
+      }
+    ]
+  },
+  {
+    id: 114,
+    text: `"Ohh that's easy, I just caught a bunch of Pokemon in the forest and beat Brock at Pewter Gym."`, 
+    options: [
+      {
+        text: `Wow, you beat Brock too?`,
+        nextText: 115,
+  },
+  ]
+},
+  {
+    id: 115,
+    text: `"Why do you act so surprised? Of course I did! I need to earn all the badges, get famous, and I'm sure my first Pokemon will hear about me and start missing my greatness", Gary explains looking proud. You're really not interested to hear his usual bragging, but you're glad he's still really determined to look for his Pokemon.`, 
+    options: [
+      {
+        text: `Ask him where Prof. Oak is`,
+        nextText: 116,
+      },
+    ]
+  },
+  {
+    id: 116,
+    text: `Gary explains that some older man wearing a lab coat stormed into the lab and started demanding Prof. Oak and the rest of the scientists for a talisman. When Prof. Oak answered that he didn't have it, the men threatened him with a vial filled with bright yellow liquid. Prof. Oak was frightened from it and had no choice but to lead the men to his secret underground lab while the rest of the scientists fled away.`, 
+    options: [
+      {
+        text: `Go with Gary to the hidden underground lab`,
+        nextText: 118,
+      },
+    ]
+  },
+  {
+    id: 117,
+    text: `Just then, you hear the voice of someone familiar complaining behind you. You turn around and see Gary complaining how you didn't stole all his glory by beating the Team Rocket's grunt.`, 
+    options: [
+      {
+        text: `Ask him where Prof. Oak is`,
+        nextText: 116,
+      },
+    ]
+  },
+  {
+    id: 118,
+    text: `Gary takes the lead and you follow him to a fake wall, exposing a secret door. He opens the door, and you both descend down the stairs until you both find Prof. Oak and the suspicious men in lab coats surrounding him!`, 
+    options: [
+      {
+        text: `Confront the man`,
+        nextText: 119,
+      },
+    ]
+  },
+  {
+    id: 119,
+    text: `"Didn't expect there'd be more company!", an old man with rounded glasses and snowy-white curly hair responds. "This must be your nephew! We need your Gramps to tell us where the talisman is or else I'll kidnap all the Pokemon!"`, 
+    options: [
+      {
+        text: `So you were all behind this!`,
+        nextText: 120,
+      },
+    ]
+  },
+{
+  id: 119,
+  text: `"Leave my Gramps alone, old man! You have to go through me first!", Gary confidently shouts. The old man lets out a laugh, and explains how he is behind all of the disappearing Pokemon, so he can mutate them with the vial he was holding. It turns out the vial with yellow liquid can turn any living thing to a monster that doesn't recognize any emotion but rage!`, 
+  options: [
+    {
+      text: `Enter battle!`,
+      nextText: 120,
+    },
+  ]
+},
+{
+  id: 120,
+  text: `You don't even let the villain finish his speech and explanation as you and Gary double-team to stop him and rescue Prof. Oak`, 
+  options: [
+    {
+      requiredState: (currentState) => currentState.boulder && currentState.flawlessVictory,
+      text: `Win the battle! (100% success rate)`,
+      nextText: 121,
+    },
+    {
+      requiredState: (currentState) => currentState.boulder || currentState.flawlessVictory,
+      text: `Start telling your Pokemon to attack him`,
+      nextText: 122,
+    },
+    {
+      text: `Struggle and lose battle`,
+      nextText: 123,
+    },
+  ]
+},
+{
+  id: 121,
+  text: `You and Gary manage to defeat the villain and rescue Prof. Oak! Prof. Oak, swiftly takes the yellow vial out of the old man's hand and throws it away through an open window. The vial smashes and breaks down into tiny glass fragments while the grass quickly absorbs the yellow contents. You notice that the patch of grass where the vial fell withers to a greyish dull color! You and Gary are both relieved of successfully getting rid of the deadly vial before any tiny drop from inside spills on Prof. Oak.`, 
+  options: [
+    {
+      text: `Continue`,
+      nextText: 124,
+    }
+  ]
+},
+{
+  id: 122,
+  text: `You and Gary manage to defeat the villain and rescue Prof. Oak! Prof. Oak, swiftly takes the yellow vial out of the old man's hand and throws it away through an open window. The vial smashes and breaks down into tiny glass fragments while the grass quickly absorbs the yellow contents. You notice that the patch of grass where the vial fell withers to a greyish dull color! You and Gary are both relieved of successfully getting rid of the deadly vial before any tiny drop from inside spills on Prof. Oak.`, 
+  options: [
+    {
+      text: `Continue`,
+      nextText: 126,
+    }
+  ]
+},
+{
+  id: 123,
+  text: `You managed to attack the old man, but he fled away before you and Gary could catch him! Thankfully, Prof. Oak is unharmed and the police arrive after a few minutes. They were unable to locate the old man.`, 
+  options: [
+    {
+      text: `Continue`,
+      nextText: 131,
+    }
+  ]
+},
+{
+  id: 122,
+  text: `The old man is still knocked out on the floor since both you and Gary's Pokemon started pouncing on the man. After a couple of minutes have passed, the police also arrive in the lab, and they put the old man in handcuffs. It turns out that the old man was one of Prof. Oak's college classmates back in the day. He wanted the talisman that Prof. Oak first gave you since it had the power to dispel the yellow liquid's effects. He planned to wear the talisman and manipulate the savage Pokemon since the talisman also had the power of mind-control.`, 
+  options: [
+    {
+      text: `Continue`,
+      nextText: 126,
+    }
+  ]
+},
+{
+  id: 124,
+  text: `The old man is still knocked out on the floor since both you and Gary's Pokemon started pouncing on the man. After a couple of minutes have passed, the police also arrive in the lab, and they put the old man in handcuffs. It turns out that the old man was one of Prof. Oak's college classmates back in the day. He wanted the talisman that Prof. Oak first gave you since it had the power to dispel the yellow liquid's effects. He planned to wear the talisman and manipulate the savage Pokemon since the talisman also had the power of mind-control.`, 
+  options: [
+    {
+      text: `Continue`,
+      nextText: 125,
+    }
+  ]
+},
+{
+  id: 126,
+  text: `The old man is still knocked out on the floor since both you and Gary's Pokemon started pouncing on the man. After a couple of minutes have passed, the police also arrive in the lab, and they put the old man in handcuffs. It turns out that the old man was one of Prof. Oak's college classmates back in the day. He wanted the talisman that Prof. Oak first gave you since it had the power to dispel the yellow liquid's effects. Unfortunately, you were unable to figure out why he wanted the talisman so badly.`, 
+  options: [
+    {
+      text: `Continue`,
+      nextText: 128,
+    }
+  ]
+},
+{
+  id: 128,
+  text: `In the end, the stolen Pokemon were retrieved eventually and found in an abandoned island. Some of the Pokemon did turn to savages, but Prof. Oak was able to help cure them with an antidote. You discover that the antidote was Mew's DNA inside of the vial your dad asked to retrieve from his office. Just a little drop of it could help restore the Pokemon back to its original self again.`, 
+  options: [
+    {
+      text: `Continue`,
+      nextText: 130,
+    }
+  ]
+},
+{
+  id: 125,
+  text: `In the end, the stolen Pokemon were retrieved eventually and found in an abandoned island. Some of the Pokemon did turn to savages, but Prof. Oak was able to help cure them with an antidote. You discover that the antidote was Mew's DNA inside of the vial your dad asked to retrieve from his office. Just a little drop of it could help restore the Pokemon back to its original self again.`, 
+  options: [
+    {
+      text: `Continue`,
+      nextText: 127,
+    }
+  ]
+},
+{
+  id: 127,
+  text: `After the case was finally solved, you and Gary start competing in more gyms and earning badges. You find out that you have a lot more in common that you previously thought! You manage to catch many other Pokemon and become stronger. Congratulations! You got the best ending!`, 
+  options: [
+    {
+      text: `The end! Go back to beginning of story!`,
+      nextText: -1,
+    }
+  ]
+},
+{
+  id: 130,
+  text: `After the case was finally solved, you and Gary start competing in more gyms and earning badges. You're still not at a level where you feel very confident about your Pokemon battling skills, but you're motivated to keep trying your best. Congratulations! You got the good ending!`, 
+  options: [
+    {
+      text: `The end! Go back to beginning of story!`,
+      nextText: -1,
+    }
+  ]
+},
+{
+  id: 131,
+  text: `More and more Pokemon continued to disappear, and you've heard from the news that there have been savage Pokemon scaring away people in some areas. The only thing you can do is hope for someone to put a stop to it, but until then, you have nothing else to do but watch as more horrors unfold in the news`, 
+  options: [
+    {
+      text: `The end! Go back to beginning of story!`,
+      nextText: -1,
+    }
+  ]
+},
 ]
 
 startGame();
