@@ -981,7 +981,7 @@ const textNodes = [
   },
   {
     id: 72,
-    text: `You spend a moment daydreaming about being the best Pokemon trainer, but you also `, 
+    text: `You spend a moment envisioning being inside one of the gyms and winning a badge. But you realize now's not the time to get carried away! `, 
     options: [
       {
         text: `Continue`,
