@@ -11,8 +11,89 @@
     </main>
 </body>
 <script>
-    const apiUrl = "https://pokeapi.co/api/v2/pokemon?offset=10&limit=10";
+    const mainUrl = "https://pokeapi.co/api/v2/pokemon-form/";
+    const completeURL = mainUrl + randomi() + "/";
     const main = document.querySelector('main');
+    const pokeArray = [];
+
+    let getIt =  async url =>{
+        const result = await fetch(url);
+        const data = result.json();
+        data.then(elem =>{
+            getName(elem);
+            getType(elem);
+            getImg(elem);
+        })
+    }
+    function randomi(){
+        let num = Math.floor(Math.random() * 898) + 1;
+        return num;
+    }
+
+    function getImg(elem){
+        let imgPath;
+        let percent = Math.random();
+        if (percent < 0.25)
+            //Shiny Pokemon
+            imgPath = elem.sprites.front_shiny;
+        else {
+            //Regular Pokemon
+            imgPath = elem.sprites.front_default;
+        }
+        pokeArray.push(imgPath);
+    }
+    function getName(elem){
+        let pokeName = {};
+        let name1 = elem.name;
+        let name2 = name1.charAt(0).toUpperCase() + name1.slice(1);
+        if(!pokeArray.find(element => element[name] == true)){
+            pokeName[`${elem.name}`] = true;
+            pokeArray.push(name2);
+            pokeArray.push(pokeName);
+        }
+    }
+    function getType(elem){
+        let type = {};
+        let types = {"types":[]};
+        if(elem.types.length > 1){
+                let type0 = elem.types[0].type.name
+                let type1 = elem.types[1].type.name
+                console.log(type0)
+                console.log(type1)
+                if(!pokeArray.find(element => element[type0] == true) && !pokeArray.find(element => element[type1] == true)){
+                    type[`${elem.types[0].type.name}`] = true;
+                    type[`${elem.types[1].type.name}`] = true;
+                    types["types"] = type;
+                    pokeArray.push(types);
+                }
+                else if (!pokeArray.find(element => element[type0] == true) && pokeArray.find(element => element[type1] == true)) 
+                {
+                    type[`${elem.types[0].type.name}`] = true;
+                    types["types"] = type;
+                    pokeArray.push(types);
+                }
+                else if (!pokeArray.find(element => element[type1] == true) && pokeArray.find(element => element[type0] == true)) 
+                {
+                    type[`${elem.types[1].type.name}`] = true;
+                    types["types"] = type;
+                    pokeArray.push(types);
+                }
+            }
+            else{
+                let type0 = elem.types[0].type.name
+                if(!pokeArray.find(element => element[type0] == true)){
+                    type[`${elem.types[0].type.name}`] = true;
+                    types["types"] = type;
+                    pokeArray.push(types);
+                }
+            }
+    }
+
+   
+    getIt(completeURL);
+    getIt(completeURL);
+    getIt(completeURL);
+    getIt(completeURL);
     
     let getData =  async url =>{
         const result = await fetch(url);
@@ -56,7 +137,7 @@
      })
     }
 
-    getData(apiUrl);
+    //getData(apiUrl);
 
 //     BASE_URL = 'https://swapi.dev/api';
 // API_URL = BASE_URL + '/people/'
@@ -132,7 +213,122 @@
 // //     // Do stuff
 // //     document.getElementsByClassName('extraInfo').style.display = "block";
 // //   });
-  
+
+
+//continuation
+// {
+//     id: 11,
+//     text: 'After leaving the merchant you start to feel tired and stumble upon a small town next to a dangerous looking castle.',
+//     options: [
+//       {
+//         text: 'Explore the castle',
+//         nextText: 4
+//       },
+//       {
+//         text: 'Find a room to sleep at in the town',
+//         nextText: 5
+//       },
+//       {
+//         text: 'Find some hay in a stable to sleep in',
+//         nextText: 6
+//       }
+//     ]
+//   },
+//   {
+//     id: 20,
+//     text: 'You are so tired that you fall asleep while exploring the castle and are killed by some terrible monster in your sleep.',
+//     options: [
+//       {
+//         text: 'Restart',
+//         nextText: -1
+//       }
+//     ]
+//   },
+//   {
+//     id: 40,
+//     text: 'Without any money to buy a room you break into the nearest inn and fall asleep. After a few hours of sleep the owner of the inn finds you and has the town guard lock you in a cell.',
+//     options: [
+//       {
+//         text: 'Restart',
+//         nextText: -1
+//       }
+//     ]
+//   },
+//   {
+//     id: 50,
+//     text: 'You wake up well rested and full of energy ready to explore the nearby castle.',
+//     options: [
+//       {
+//         text: 'Explore the castle',
+//         nextText: 7
+//       }
+//     ]
+//   },
+//   {
+//     id: 70,
+//     text: 'While exploring the castle you come across a horrible monster in your path.',
+//     options: [
+//       {
+//         text: 'Try to run',
+//         nextText: 8
+//       },
+//       {
+//         text: 'Attack it with your sword',
+//         requiredState: (currentState) => currentState.sword,
+//         nextText: 9
+//       },
+//       {
+//         text: 'Hide behind your shield',
+//         requiredState: (currentState) => currentState.shield,
+//         nextText: 10
+//       },
+//       {
+//         text: 'Throw the blue goo at it',
+//         requiredState: (currentState) => currentState.blueGoo,
+//         nextText: 11
+//       }
+//     ]
+//   },
+//   {
+//     id: 90,
+//     text: 'Your attempts to run are in vain and the monster easily catches.',
+//     options: [
+//       {
+//         text: 'Restart',
+//         nextText: -1
+//       }
+//     ]
+//   },
+//   {
+//     id: 100,
+//     text: 'You foolishly thought this monster could be slain with a single sword.',
+//     options: [
+//       {
+//         text: 'Restart',
+//         nextText: -1
+//       }
+//     ]
+//   },
+//   {
+//     id: 110,
+//     text: 'The monster laughed as you hid behind your shield and ate you.',
+//     options: [
+//       {
+//         text: 'Restart',
+//         nextText: -1
+//       }
+//     ]
+//   },
+//   {
+//     id: 111,
+//     text: 'You threw your jar of goo at the monster and it exploded. After the dust settled you saw the monster was destroyed. Seeing your victory you decide to claim this castle as your and live out the rest of your days there.',
+//     options: [
+//       {
+//         text: 'Congratulations. Play Again.',
+//         nextText: -1
+//       }
+//     ]
+//   }
 
 
 </script>

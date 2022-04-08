@@ -1,0 +1,17 @@
+{
+  "starter": [
+  {
+    "name": "Bulbasaur",
+    "type": "grass",
+    "image": "/finalProject/bulbasaur.png"
+  },
+  {
+    "name": "Charmander",
+    "type": "fire"
+  },
+  {
+    "name": "Squirtle",
+    "type": "water"
+  }
+]
+}
