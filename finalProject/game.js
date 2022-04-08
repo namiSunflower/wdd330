@@ -173,7 +173,7 @@ function retrieveFromLs(key){
 let pokemon= JSON.parse(localStorage.getItem("pokemonList"));
 
 
-const textNodes = [
+export const textNodes = [
   {
     id: 1,
     text: `*Alarm clock starts ringing*`,
